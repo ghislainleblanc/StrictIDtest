@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ProfileViewController.swift
 //  StrictIDtest
 //
 //  Created by Ghislain Leblanc on 2018-03-29.
@@ -8,18 +8,15 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class ProfileViewController: UIViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
 }
-
