@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		19698300F48D61A166B3DCE4 /* Pods_StrictIDtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E5953FB4B3E43516630B741 /* Pods_StrictIDtest.framework */; };
 		3748EAA0206D3811003014B6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3748EA9F206D3811003014B6 /* AppDelegate.swift */; };
 		3748EAA2206D3811003014B6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3748EAA1206D3811003014B6 /* LoginViewController.swift */; };
 		3748EAA5206D3811003014B6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3748EAA3206D3811003014B6 /* Main.storyboard */; };
@@ -38,6 +39,9 @@
 		3748EAB4206D3811003014B6 /* StrictIDtestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrictIDtestTests.swift; sourceTree = "<group>"; };
 		3748EAB6206D3811003014B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3748EABF206D5331003014B6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		3E5953FB4B3E43516630B741 /* Pods_StrictIDtest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StrictIDtest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		54A232FD89EE19A22BF61EA2 /* Pods-StrictIDtest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StrictIDtest.release.xcconfig"; path = "Pods/Target Support Files/Pods-StrictIDtest/Pods-StrictIDtest.release.xcconfig"; sourceTree = "<group>"; };
+		7548A73D3A405DD283D1A1FA /* Pods-StrictIDtest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StrictIDtest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StrictIDtest/Pods-StrictIDtest.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19698300F48D61A166B3DCE4 /* Pods_StrictIDtest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,12 +63,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		253FBEA6C33D117D6192DA50 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7548A73D3A405DD283D1A1FA /* Pods-StrictIDtest.debug.xcconfig */,
+				54A232FD89EE19A22BF61EA2 /* Pods-StrictIDtest.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		34D53DB19D2ABDFE56C31C00 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3E5953FB4B3E43516630B741 /* Pods_StrictIDtest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		3748EA93206D3811003014B6 = {
 			isa = PBXGroup;
 			children = (
 				3748EA9E206D3811003014B6 /* StrictIDtest */,
 				3748EAB3206D3811003014B6 /* StrictIDtestTests */,
 				3748EA9D206D3811003014B6 /* Products */,
+				253FBEA6C33D117D6192DA50 /* Pods */,
+				34D53DB19D2ABDFE56C31C00 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -106,9 +130,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3748EAB9206D3811003014B6 /* Build configuration list for PBXNativeTarget "StrictIDtest" */;
 			buildPhases = (
+				1E69B514258D864C5FEB8B1C /* [CP] Check Pods Manifest.lock */,
 				3748EA98206D3811003014B6 /* Sources */,
 				3748EA99206D3811003014B6 /* Frameworks */,
 				3748EA9A206D3811003014B6 /* Resources */,
+				F6E419B1D109A27951603419 /* [CP] Embed Pods Frameworks */,
+				1CFA70EB51EAB945FB169F1E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -196,6 +223,60 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1CFA70EB51EAB945FB169F1E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-StrictIDtest/Pods-StrictIDtest-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1E69B514258D864C5FEB8B1C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-StrictIDtest-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F6E419B1D109A27951603419 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-StrictIDtest/Pods-StrictIDtest-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-StrictIDtest/Pods-StrictIDtest-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3748EA98206D3811003014B6 /* Sources */ = {
@@ -355,6 +436,7 @@
 		};
 		3748EABA206D3811003014B6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7548A73D3A405DD283D1A1FA /* Pods-StrictIDtest.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -370,6 +452,7 @@
 		};
 		3748EABB206D3811003014B6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 54A232FD89EE19A22BF61EA2 /* Pods-StrictIDtest.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

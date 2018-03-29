@@ -10,7 +10,6 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
-    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
