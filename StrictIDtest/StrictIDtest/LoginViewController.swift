@@ -11,11 +11,11 @@ import Heimdallr
 
 class LoginViewController: UIViewController {
 
-    @IBOutlet weak var headerLabel: UILabel!
-    @IBOutlet weak var usernameTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var messageLabel: UILabel!
-    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet private weak var headerLabel: UILabel!
+    @IBOutlet private weak var usernameTextField: UITextField!
+    @IBOutlet private weak var passwordTextField: UITextField!
+    @IBOutlet private weak var messageLabel: UILabel!
+    @IBOutlet private weak var loginButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +49,7 @@ class LoginViewController: UIViewController {
 //            messageLabel.text = "Missing credentials."
 //            return
 //        }
-//        
+//
 //        messageLabel.text = ""
         
         let clientID = "B1rOxguwu7Aagg1X8GRDIrO1aAhapvzy2xDOvOJq"
