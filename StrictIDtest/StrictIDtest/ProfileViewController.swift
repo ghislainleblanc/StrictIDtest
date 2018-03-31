@@ -13,6 +13,8 @@ class ProfileViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var sendButton: UIButton!
     
+    var account: String?
+    
     private var centralManager: CBCentralManager!
     private var sensor: CBPeripheral?
     private var discoveredDevices: Array<CBPeripheral> = []
@@ -32,18 +34,21 @@ class ProfileViewController: UIViewController {
         guard let service = sensor?.services?.first else {
             return
         }
+        
         guard let characteristic = service.characteristics?.first else {
             return
         }
-        guard let descriptor = characteristic.descriptors?.first else {
-            return
-        }
-        guard let data = "ghisleb@me.com".data(using: .utf8) else {
+        
+        guard let data = account?.data(using: .utf8) else {
             return
         }
 
         print("sending:\n" + data.description)
         sensor?.writeValue(data, for: characteristic, type: .withoutResponse)
+        
+        if (sensor != nil) {
+            centralManager.cancelPeripheralConnection(sensor!)
+        }
     }
 }
 
@@ -72,14 +77,6 @@ extension ProfileViewController: CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didDiscoverDescriptorsFor characteristic: CBCharacteristic, error: Error?) {
         print("didDiscoverDescriptorsFor")
         sendButton.isEnabled = true
-    }
-    
-    func peripheral(_ peripheral: CBPeripheral, didWriteValueFor descriptor: CBDescriptor, error: Error?) {
-        print("didWriteValueFor")
-        
-        if (error != nil) {
-            print("errror: " + error!.localizedDescription)
-        }
     }
 }
 

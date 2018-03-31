@@ -29,6 +29,14 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let destination = segue.destination as? ProfileViewController else {
+            return
+        }
+        
+        destination.account = usernameTextField.text
+    }
+    
     @objc func textFieldDidEnd(textField: UITextField) {
         let text = textField.text
         if text?.count != 0 {
@@ -45,12 +53,17 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction private func login() {
-//        guard let username = usernameTextField.text, let password = passwordTextField.text, username.count != 0, password.count != 0 else {
-//            messageLabel.text = "Missing credentials."
-//            return
-//        }
-//
-//        messageLabel.text = ""
+        guard let username = usernameTextField.text, let password = passwordTextField.text, username.count != 0, password.count != 0 else {
+            messageLabel.text = "Missing credentials."
+            return
+        }
+        
+        guard isValidEmail(testStr: username) else {
+            messageLabel.text = "Username should be valid email."
+            return
+        }
+
+        messageLabel.text = ""
 //
 //        let clientID = "B1rOxguwu7Aagg1X8GRDIrO1aAhapvzy2xDOvOJq"
 //        let secret = "ZEHNjy6K8Ao4lvHo9vvtBaEOBGVBxB9l3Km9RwKpyWqKe4hHw8K6DAxDHNqrVEPbFdlzGFG1fwh9c2yZ47nCGpo7HoqKu56KfGs9WYjCmOocKoqZz5lbMEJvJbfwFgLW"
@@ -66,7 +79,15 @@ class LoginViewController: UIViewController {
 //                print("failure: \(error.localizedDescription)\n\(error.localizedFailureReason!)")
 //            }
 //        }
+        
         self.performSegue(withIdentifier: "Show Profile", sender: nil)
+    }
+    
+    private func isValidEmail(testStr: String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluate(with: testStr)
     }
 }
 
