@@ -20,8 +20,8 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        usernameTextField.addTarget(self, action: #selector(self.textFieldDidEnd(textField:)), for: UIControlEvents.editingDidEndOnExit)
-        passwordTextField.addTarget(self, action: #selector(self.textFieldDidEnd(textField:)), for: UIControlEvents.editingDidEndOnExit)
+        usernameTextField.addTarget(self, action: #selector(textFieldDidEnd(textField:)), for: UIControlEvents.editingDidEndOnExit)
+        passwordTextField.addTarget(self, action: #selector(textFieldDidEnd(textField:)), for: UIControlEvents.editingDidEndOnExit)
     }
 
     override func didReceiveMemoryWarning() {
@@ -80,7 +80,7 @@ class LoginViewController: UIViewController {
 //            }
 //        }
         
-        self.performSegue(withIdentifier: "Show Profile", sender: nil)
+        performSegue(withIdentifier: "Show Profile", sender: nil)
     }
     
     private func isValidEmail(testStr: String) -> Bool {

@@ -78,7 +78,7 @@ extension ProfileViewController: CBPeripheralDelegate {
 
 extension ProfileViewController: CBCentralManagerDelegate {
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        var state = "N/A"
+        var state = "n/a"
         
         switch central.state {
         case .poweredOn:
@@ -96,7 +96,7 @@ extension ProfileViewController: CBCentralManagerDelegate {
             state = "The state of the BLE Manager is unknown."
         }
         
-        print("State: " + state)
+        print(state)
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
