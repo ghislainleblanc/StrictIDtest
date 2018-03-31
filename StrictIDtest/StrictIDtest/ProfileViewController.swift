@@ -45,10 +45,6 @@ class ProfileViewController: UIViewController {
 
         print("sending:\n" + data.description)
         sensor?.writeValue(data, for: characteristic, type: .withoutResponse)
-        
-        if (sensor != nil) {
-            centralManager.cancelPeripheralConnection(sensor!)
-        }
     }
 }
 
