@@ -51,21 +51,21 @@ class LoginViewController: UIViewController {
 //        }
 //
 //        messageLabel.text = ""
-        
-        let clientID = "B1rOxguwu7Aagg1X8GRDIrO1aAhapvzy2xDOvOJq"
-        let secret = "ZEHNjy6K8Ao4lvHo9vvtBaEOBGVBxB9l3Km9RwKpyWqKe4hHw8K6DAxDHNqrVEPbFdlzGFG1fwh9c2yZ47nCGpo7HoqKu56KfGs9WYjCmOocKoqZz5lbMEJvJbfwFgLW"
-        let credentials = OAuthClientCredentials(id: clientID, secret: secret)
-        let tokenURL = URL(string: "http://strictid.bitcraft.com.pl/api/v2/oauth2/token/")!
-        let heimdallr = Heimdallr(tokenURL: tokenURL, credentials: credentials)
-
-        heimdallr.requestAccessToken(username: "ghisleb@me.com", password: "yikes1024") { result in
-            switch result {
-            case .success:
-                print("success")
-            case .failure(let error):
-                print("failure: \(error.localizedDescription)\n\(error.localizedFailureReason!)")
-            }
-        }
+//
+//        let clientID = "B1rOxguwu7Aagg1X8GRDIrO1aAhapvzy2xDOvOJq"
+//        let secret = "ZEHNjy6K8Ao4lvHo9vvtBaEOBGVBxB9l3Km9RwKpyWqKe4hHw8K6DAxDHNqrVEPbFdlzGFG1fwh9c2yZ47nCGpo7HoqKu56KfGs9WYjCmOocKoqZz5lbMEJvJbfwFgLW"
+//        let credentials = OAuthClientCredentials(id: clientID, secret: secret)
+//        let tokenURL = URL(string: "http://strictid.bitcraft.com.pl/api/v2/oauth2/token/")!
+//        let heimdallr = Heimdallr(tokenURL: tokenURL, credentials: credentials)
+//
+//        heimdallr.requestAccessToken(username: "ghisleb@me.com", password: "yikes1024") { result in
+//            switch result {
+//            case .success:
+//                print("success")
+//            case .failure(let error):
+//                print("failure: \(error.localizedDescription)\n\(error.localizedFailureReason!)")
+//            }
+//        }
         self.performSegue(withIdentifier: "Show Profile", sender: nil)
     }
 }

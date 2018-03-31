@@ -36,7 +36,7 @@ extension ProfileViewController: CBCentralManagerDelegate {
         switch central.state {
         case .poweredOn:
             state = "Scanning..."
-            centralManager.scanForPeripherals(withServices: [], options: nil)
+            centralManager.scanForPeripherals(withServices: [CBUUID(string: "E20A39F4-73F5-4BC4-A12F-17D1AD07A961")], options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
         case .poweredOff:
             state = "Bluetooth on this device is currently powered off."
         case .unsupported:
@@ -53,14 +53,18 @@ extension ProfileViewController: CBCentralManagerDelegate {
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        guard let name = peripheral.name else {
-            return
-        }
-        
-        if (!discoveredDevices.contains(peripheral) && !name.isEmpty) {
+        if (!discoveredDevices.contains(peripheral)) {
             discoveredDevices.append(peripheral)
             tableView.reloadData()
         }
+    }
+    
+    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+        print("didConnect")
+    }
+    
+    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+        print("didDisconnect")
     }
 }
 
@@ -71,7 +75,7 @@ extension ProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Device Cell", for: indexPath)
-        cell.textLabel?.text = discoveredDevices[indexPath.row].name
+        cell.textLabel?.text = discoveredDevices[indexPath.row].description
         return cell
     }
 }

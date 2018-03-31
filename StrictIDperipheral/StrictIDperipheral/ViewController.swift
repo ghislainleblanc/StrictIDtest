@@ -11,13 +11,10 @@ import CoreBluetooth
 
 class ViewController: UIViewController {
     @IBOutlet private weak var firstLabel: UILabel!
-    @IBOutlet private weak var secondLabel: UILabel!
-    @IBOutlet private weak var thirdLabel: UILabel!
     @IBOutlet private weak var statusLabel: UILabel!
     
     private var peripheral: CBPeripheralManager!
     private var receiveCharacteristic: CBMutableCharacteristic!
-    private var transmitCharacteristic: CBMutableCharacteristic!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,23 +36,16 @@ class ViewController: UIViewController {
     }
 
     fileprivate func addService() {
-        var properties: CBCharacteristicProperties = [.notify, .read]
-        let permissions: CBAttributePermissions = [.readable, .writeable]
-        
-        transmitCharacteristic = CBMutableCharacteristic(type: CBUUID(string: "C9D7271A-1B8C-4F17-9756-F7EB36B18A2B"),
-                                                         properties: properties,
-                                                         value: nil,
-                                                         permissions: permissions)
-        
-        properties = [.write]
-        receiveCharacteristic = CBMutableCharacteristic(type: CBUUID(string: "8CED9D9F-9EAD-4CE8-964C-0EAC13467236"),
+        let properties: CBCharacteristicProperties = [.write]
+        let permissions: CBAttributePermissions = [.writeable]
+        receiveCharacteristic = CBMutableCharacteristic(type: CBUUID(string: "08590F7E-DB05-467E-8757-72F6FAEB13D4"),
                                                        properties: properties,
                                                        value: nil,
                                                        permissions: permissions)
         
         
-        let service = CBMutableService(type: CBUUID(string: "64B777E4-1F94-4388-B098-665DC9F26881"), primary: true)
-        service.characteristics = [receiveCharacteristic, transmitCharacteristic]
+        let service = CBMutableService(type: CBUUID(string: "E20A39F4-73F5-4BC4-A12F-17D1AD07A961"), primary: true)
+        service.characteristics = [receiveCharacteristic]
         
         peripheral.add(service)
     }
@@ -74,20 +64,18 @@ extension ViewController: CBPeripheralManagerDelegate {
     
     func peripheralManagerDidStartAdvertising(_ peripheral: CBPeripheralManager, error: Error?) {
         print("Status advertising...")
-        statusLabel.text = "Advertising..."
+        statusLabel.text = "Advertising (\(peripheral)..."
     }
     
     func peripheralManager(_ peripheral: CBPeripheralManager, didAdd service: CBService, error: Error?) {
         var advertisement: [String : Any] = [:]
-        
-        advertisement[CBAdvertisementDataServiceUUIDsKey] = ["64B777E4-1F94-4388-B098-665DC9F26881"]
-        advertisement[CBAdvertisementDataLocalNameKey] = "Test"
+
+        advertisement[CBAdvertisementDataServiceUUIDsKey] = [CBUUID(string: "E20A39F4-73F5-4BC4-A12F-17D1AD07A961")]
         
         peripheral.startAdvertising(advertisement)
     }
     
     func peripheralManager(_ peripheral: CBPeripheralManager, central: CBCentral, didSubscribeTo characteristic: CBCharacteristic) {
-
     }
     
     func peripheralManager(_ peripheral: CBPeripheralManager, central: CBCentral, didUnsubscribeFrom characteristic: CBCharacteristic) {
