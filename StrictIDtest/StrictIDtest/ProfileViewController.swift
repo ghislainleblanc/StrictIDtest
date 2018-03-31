@@ -14,7 +14,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet private weak var sendButton: UIButton!
     
     private var centralManager: CBCentralManager!
-    private var sensorTag: CBPeripheral?
+    private var sensor: CBPeripheral?
     private var discoveredDevices: Array<CBPeripheral> = []
     
     override func viewDidLoad() {
@@ -27,6 +27,60 @@ class ProfileViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    @IBAction private func sendButtonAction() {
+        guard let service = sensor?.services?.first else {
+            return
+        }
+        guard let characteristic = service.characteristics?.first else {
+            return
+        }
+        guard let descriptor = characteristic.descriptors?.first else {
+            return
+        }
+        guard let data = "ghisleb@me.com".data(using: .utf8) else {
+            return
+        }
+
+        print("sending:\n" + data.description)
+        sensor?.writeValue(data, for: characteristic, type: .withoutResponse)
+    }
+}
+
+extension ProfileViewController: CBPeripheralDelegate {
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+        print("didDiscoverServices")
+        sensor = peripheral
+        
+        guard let services = peripheral.services?.first else {
+            return
+        }
+        
+        peripheral.discoverCharacteristics([CBUUID(string: "08590F7E-DB05-467E-8757-72F6FAEB13D4")], for: services)
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+        print("didDiscoverCharacteristicsFor")
+        sensor = peripheral
+        
+        guard let characteristic = sensor?.services?.first?.characteristics?.first else {
+            return
+        }
+        peripheral.discoverDescriptors(for: characteristic)
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverDescriptorsFor characteristic: CBCharacteristic, error: Error?) {
+        print("didDiscoverDescriptorsFor")
+        sendButton.isEnabled = true
+    }
+    
+    func peripheral(_ peripheral: CBPeripheral, didWriteValueFor descriptor: CBDescriptor, error: Error?) {
+        print("didWriteValueFor")
+        
+        if (error != nil) {
+            print("errror: " + error!.localizedDescription)
+        }
+    }
 }
 
 extension ProfileViewController: CBCentralManagerDelegate {
@@ -35,7 +89,7 @@ extension ProfileViewController: CBCentralManagerDelegate {
         
         switch central.state {
         case .poweredOn:
-            state = "Scanning..."
+            state = "scanning..."
             centralManager.scanForPeripherals(withServices: [CBUUID(string: "E20A39F4-73F5-4BC4-A12F-17D1AD07A961")], options: [CBCentralManagerScanOptionAllowDuplicatesKey : true])
         case .poweredOff:
             state = "Bluetooth on this device is currently powered off."
@@ -61,10 +115,13 @@ extension ProfileViewController: CBCentralManagerDelegate {
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         print("didConnect")
+        sensor = peripheral
+        sensor?.discoverServices([CBUUID(string: "E20A39F4-73F5-4BC4-A12F-17D1AD07A961")])
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         print("didDisconnect")
+        sendButton.isEnabled = false
     }
 }
 
@@ -75,13 +132,17 @@ extension ProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Device Cell", for: indexPath)
-        cell.textLabel?.text = discoveredDevices[indexPath.row].description
+        cell.textLabel?.text = discoveredDevices[indexPath.row].name?.count != 0 ? discoveredDevices[indexPath.row].name : discoveredDevices[indexPath.row].description
         return cell
     }
 }
 
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        sendButton.isEnabled = true
+        sensor = discoveredDevices[indexPath.row]
+        sensor?.delegate = self
+        if (sensor != nil) {
+            centralManager.connect(sensor!, options:nil)
+        }
     }
 }

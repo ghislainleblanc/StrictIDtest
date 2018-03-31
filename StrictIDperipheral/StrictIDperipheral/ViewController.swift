@@ -36,7 +36,7 @@ class ViewController: UIViewController {
     }
 
     fileprivate func addService() {
-        let properties: CBCharacteristicProperties = [.write]
+        let properties: CBCharacteristicProperties = [.writeWithoutResponse]
         let permissions: CBAttributePermissions = [.writeable]
         receiveCharacteristic = CBMutableCharacteristic(type: CBUUID(string: "08590F7E-DB05-467E-8757-72F6FAEB13D4"),
                                                        properties: properties,
@@ -63,8 +63,8 @@ extension ViewController: CBPeripheralManagerDelegate {
     }
     
     func peripheralManagerDidStartAdvertising(_ peripheral: CBPeripheralManager, error: Error?) {
-        print("Status advertising...")
-        statusLabel.text = "Advertising (\(peripheral)..."
+        print("advertising...")
+        statusLabel.text = "Advertising..."
     }
     
     func peripheralManager(_ peripheral: CBPeripheralManager, didAdd service: CBService, error: Error?) {
@@ -76,17 +76,26 @@ extension ViewController: CBPeripheralManagerDelegate {
     }
     
     func peripheralManager(_ peripheral: CBPeripheralManager, central: CBCentral, didSubscribeTo characteristic: CBCharacteristic) {
+        print("didSubscribeTo")
     }
     
     func peripheralManager(_ peripheral: CBPeripheralManager, central: CBCentral, didUnsubscribeFrom characteristic: CBCharacteristic) {
+        print("didUnsubscribeFrom")
     }
     
     func peripheralManager(_ peripheral: CBPeripheralManager, didReceiveRead request: CBATTRequest) {
+        print("didReceiveRead")
     }
     
     func peripheralManager(_ peripheral: CBPeripheralManager, didReceiveWrite requests: [CBATTRequest]) {
+        print("didReceiveWrite")
+        guard let data = requests.first?.value, let string = String(data: data, encoding: .utf8) else {
+            return
+        }
+        firstLabel.text = string
     }
     
     func peripheralManagerIsReady(toUpdateSubscribers peripheral: CBPeripheralManager) {
+        print("peripheralManagerIsReady")
     }
 }
