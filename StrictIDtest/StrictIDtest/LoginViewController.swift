@@ -52,35 +52,43 @@ class LoginViewController: UIViewController {
         }
     }
     
+    @objc private func loginSuccess() {
+        self.performSegue(withIdentifier: "Show Profile", sender: nil)
+    }
+    
+    @objc private func loginFailure() {
+        self.messageLabel.text = "Bad login."
+    }
+    
     @IBAction private func login() {
         guard let username = usernameTextField.text, let password = passwordTextField.text, username.count != 0, password.count != 0 else {
             messageLabel.text = "Missing credentials."
             return
         }
-        
+
         guard isValidEmail(testStr: username) else {
             messageLabel.text = "Username should be valid email."
             return
         }
 
         messageLabel.text = ""
-//
-//        let clientID = "B1rOxguwu7Aagg1X8GRDIrO1aAhapvzy2xDOvOJq"
-//        let secret = "ZEHNjy6K8Ao4lvHo9vvtBaEOBGVBxB9l3Km9RwKpyWqKe4hHw8K6DAxDHNqrVEPbFdlzGFG1fwh9c2yZ47nCGpo7HoqKu56KfGs9WYjCmOocKoqZz5lbMEJvJbfwFgLW"
-//        let credentials = OAuthClientCredentials(id: clientID, secret: secret)
-//        let tokenURL = URL(string: "http://strictid.bitcraft.com.pl/api/v2/oauth2/token/")!
-//        let heimdallr = Heimdallr(tokenURL: tokenURL, credentials: credentials)
-//
-//        heimdallr.requestAccessToken(username: "ghisleb@me.com", password: "yikes1024") { result in
-//            switch result {
-//            case .success:
-//                print("success")
-//            case .failure(let error):
-//                print("failure: \(error.localizedDescription)\n\(error.localizedFailureReason!)")
-//            }
-//        }
-        
-        performSegue(withIdentifier: "Show Profile", sender: nil)
+
+        let clientID = "htuwMXDUXRSVUs4wQOlVV8DLBV6u8fisSyM4nCz2"
+        let secret = "A348L12SbD9jOqw3Vry3aBbLnYzi3rRlspZubRqACI9bymFTR9MBkXxvapRtkne6xEunawgcSprWIICIpI98BGWL8xDq0DkLszIOtRTQDl2T06Ielx46uPiGhk3t2Eyq"
+        let credentials = OAuthClientCredentials(id: clientID, secret: secret)
+        let tokenURL = URL(string: "https://api-strictid.bitcraft.com.pl/api/v2/oauth2/token/")!
+        let heimdallr = Heimdallr(tokenURL: tokenURL, credentials: credentials)
+
+        heimdallr.requestAccessToken(username: username, password: password) { result in
+            switch result {
+            case .success:
+                print("success")
+                self.performSelector(onMainThread: #selector(self.loginSuccess), with: nil, waitUntilDone: false)
+            case .failure(let error):
+                print("failure: \(error.localizedDescription)")
+                self.performSelector(onMainThread: #selector(self.loginFailure), with: nil, waitUntilDone: false)
+            }
+        }
     }
     
     private func isValidEmail(testStr: String) -> Bool {
